@@ -1,0 +1,18 @@
+//Docker
+sudo docker pull postgres
+sudo docker run --name=todo-db -e POSTGRES_PASSWORD=10007 -p 5436:5432 -d --rm postgres
+sudo docker ps
+sudo docker exec -it 5d181331deb9 /bin/bash
+psql -U postgres
+
+// migrate
+migrate create -ext sql -dir ./schema -seq init
+migrate -path ./schema -database 'postgres://postgres:10007@localhost:5436/postgres?sslmode=disable' up
+migrate -path ./schema -database 'postgres://postgres:10007@localhost:5436/postgres?sslmode=disable' down
+
+// postgres
+SELECT * FROM schema_migrations;
+UPDATE schema_migrations SET version='000001', dirty=false;
+
+// Go
+go run cmd/main.go

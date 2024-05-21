@@ -1,8 +1,13 @@
 package service
 
-import "github.com/XapTMaH19/todo-app/internal/storage"
+import (
+	"github.com/XapTMaH19/todo-app/internal/models"
+	"github.com/XapTMaH19/todo-app/internal/storage"
+)
 
 type Authorization interface {
+	CreateUser(user models.User) (int, error)
+	GenerateToken(username string, password string) (string, error)
 }
 
 type TodoList interface {
@@ -18,5 +23,7 @@ type Service struct {
 }
 
 func NewService(storage *storage.Storage) *Service {
-	return &Service{}
+	return &Service{
+		Authorization: NewAuthService(storage.Authorization),
+	}
 }

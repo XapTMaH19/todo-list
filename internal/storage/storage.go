@@ -1,6 +1,13 @@
 package storage
 
+import (
+	"github.com/XapTMaH19/todo-app/internal/models"
+	"github.com/jmoiron/sqlx"
+)
+
 type Authorization interface {
+	CreateUser(user models.User) (int, error)
+	GetUser(username string, password string) (models.User, error)
 }
 
 type TodoList interface {
@@ -15,6 +22,8 @@ type Storage struct {
 	TodoItem
 }
 
-func NewStorage() *Storage {
-	return &Storage{}
+func NewStorage(db *sqlx.DB) *Storage {
+	return &Storage{
+		Authorization: NewAuthPostgres(db),
+	}
 }
