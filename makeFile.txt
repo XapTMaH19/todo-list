@@ -2,7 +2,7 @@
 sudo docker pull postgres
 sudo docker run --name=todo-db -e POSTGRES_PASSWORD=10007 -p 5436:5432 -d --rm postgres
 sudo docker ps
-sudo docker exec -it 5d181331deb9 /bin/bash
+sudo docker exec -it d0464e9a3e11c04ba211fdf58195dced3116558f815822c43ccab044d98a2fa4 /bin/bash
 psql -U postgres
 
 // migrate
